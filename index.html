@@ -186,10 +186,10 @@
                         alert("haha nice try IT person, you think i didnt think of that?")
                         console.log("IT person detected");
                         document.getElementById('tokenModal').style.display = 'block';
-                        window.close(); 
+                        //window.close(); 
                     } else {
                         console.log("setting as IT from else");
-                         localStorage.setItem('isIT', 'true');
+                        localStorage.setItem('isIT', 'true');
                     }
                 }           
           }
@@ -217,11 +217,10 @@
             if (event.ctrlKey && event.key === 'p') 
             {
                 event.preventDefault(); 
-                localStorage.setItem('isIT', 'false');
-                console.log("setting as IT from from keys");
                 window.location.href = 'https://app.schoology.com'; 
                 } 
             });
+
 
         function setCookie(name, value, days) {
             let expires = "";
@@ -233,31 +232,35 @@
             document.cookie = name + "=" + (value || "") + expires + "; path=/";
         }
 
-        if (!hasAgreed) {
-            document.getElementById('policyModal').style.display = 'block';
-        } else if (hasAgreed && didToken === true && isIT !== true) {
-            document.getElementById('gameSelectModal').style.display = 'block';  // Show the game modal if conditions are right
-        }
-        
-        if (hasAgreed && didToken === false) {
-            document.getElementById('tokenModal').style.display = 'block';
-            document.getElementById('gameSelectModal').style.display = 'none';
-            document.getElementById('policyModal').style.display = 'none';
-        } 
-        
+
+                if (!hasAgreed) {
+                    document.getElementById('policyModal').style.display = 'block';
+                } else if (hasAgreed && didToken) {
+                    document.getElementById('gameSelectModal').style.display = 'block';  // Show the game modal if conditions are right
+                } else if (hasAgreed && !didToken) {
+                    document.getElementById('tokenModal').style.display = 'block';
+                    document.getElementById('gameSelectModal').style.display = 'none';
+                    document.getElementById('policyModal').style.display = 'none';
+                } 
 
 
         document.getElementById('agreeButton').onclick = function() {
             localStorage.setItem('agree', 'true');
             document.getElementById('policyModal').style.display = 'none';
-            document.getElementById('tokenModal').style.display = 'block'; // Show token modal
+            
+            if (!didToken) {
+                 document.getElementById('tokenModal').style.display = 'block'; 
+            } else {
+                 document.getElementById('gameSelectModal').style.display = 'block';
+            }
+
         };
 
         document.getElementById('submitBTN').onclick = async function() {
             const tokenInput = document.getElementById('tokenInput').value;
             const tokenReal = await getToken();
             
-            if (tokenInput && tokenInput === tokenReal) {  // Check if input exists and matches real token
+            if (tokenInput === tokenReal) {  // Check if input exists and matches real token
                 alert("Token is valid! Proceeding to game selection.");
                 document.getElementById('tokenModal').style.display = 'none';
                 document.getElementById('gameSelectModal').style.display = 'block'; 
@@ -283,67 +286,7 @@
                 return null; // Return null if there's an error
             }
         }
-
-
-
-        ///the other games
-        document.getElementById('crazyGames').onclick = function() {
-            document.getElementById('gameSelectModal').style.display = 'none';
-            fetchData('https://crazygames.com');
-        };
-
-        document.getElementById('freezenova').onclick = function() {
-            document.getElementById('gameSelectModal').style.display = 'none';
-            fetchData('https://unblocked-games.s3.amazonaws.com/index.html');
-        };
-
-        document.getElementById('coolmethgains').onclick = function() {
-            document.getElementById('gameSelectModal').style.display = 'none';
-            fetchData('https://coolmathgames.com');
-        };
-
-        document.getElementById('gfcenow').onclick = function() {
-            document.getElementById('gameSelectModal').style.display = 'none';
-            fetchData('https://play.geforcenow.com/mall');
-        };
-
-        document.getElementById('robloxGame').onclick = function() {
-            document.getElementById('gameSelectModal').style.display = 'none';
-            fetchData('https://roblox.com');
-        };
-
-        /// social media
-
-        document.getElementById('snapChat').onclick = function() {
-            document.getElementById('gameSelectModal').style.display = 'none';
-            fetchData('https://snapchat.com');
-        };
-
-        document.getElementById('Instagram').onclick = function() {
-            document.getElementById('gameSelectModal').style.display = 'none';
-            fetchData('https://instagram.com');
-        };
-
-        document.getElementById('tiktok').onclick = function() {
-            document.getElementById('gameSelectModal').style.display = 'none';
-            fetchData('https://tiktok.com');
-        };
-
-        document.getElementById('Reddit').onclick = function() {
-            document.getElementById('gameSelectModal').style.display = 'none';
-            fetchData('https://reddit.com');
-        };
-
-        document.getElementById('discord').onclick = function() {
-            document.getElementById('gameSelectModal').style.display = 'none';
-            fetchData('https://discord.com');
-        };
-
-        document.getElementById('youtube').onclick = function() {
-            document.getElementById('gameSelectModal').style.display = 'none';
-            fetchData('https://youtube.com');
-        };
-
+    
         function fetchData(url) {
             fetch(`https://cors-anywhere.herokuapp.com/${url}`, {
                 headers: {
@@ -413,6 +356,7 @@
         document.getElementById('resultFrame').addEventListener('load', observeIframe);
 
         // Handle messages from the iframe
+        
         window.addEventListener('message', function(event) {
             if (event.origin !== window.location.origin) {
                 return;
@@ -420,7 +364,9 @@
             const newUrl = event.data;
             fetchData(newUrl);
         });
-
+    
     </script>
+
+    <script src="click.js"></script>
 </body>
 </html>
