@@ -5,7 +5,7 @@ document.getElementById('crazyGames').onclick = function() {
 
         document.getElementById('freezenova').onclick = function() {
             document.getElementById('gameSelectModal').style.display = 'none';
-            fetchData('https://unblocked-games.s3.amazonaws.com/index.html');
+            fetchData('https://51.158.204.60/index.html?__cpo=aHR0cHM6Ly91bmJsb2NrZWQtZ2FtZXMuczMuYW1hem9uYXdzLmNvbQ');
         };
 
         document.getElementById('coolmethgains').onclick = function() {
@@ -15,7 +15,7 @@ document.getElementById('crazyGames').onclick = function() {
 
         document.getElementById('gfcenow').onclick = function() {
             document.getElementById('gameSelectModal').style.display = 'none';
-            fetchData('https://play.geforcenow.com/mall');
+            fetchData('https://51.158.204.60/mall/?__cpo=aHR0cHM6Ly9wbGF5LmdlZm9yY2Vub3cuY29t#/loginwall');
         };
 
         document.getElementById('robloxGame').onclick = function() {
